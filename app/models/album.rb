@@ -2,7 +2,7 @@
 # album.rb
 # Jonathan D. Stott <jonathan.stott@gmail.com>
 # Created: Wednesday, May 21, 2008 @ 19:07
-# Modified: Wednesday, May 21, 2008 @ 19:50
+# Modified: Wednesday, May 21, 2008 @ 20:09
 
 class Album
 
@@ -10,7 +10,7 @@ class Album
 
   def initialize(title,photos=[])
     @title = title
-    @photes = photoes
+    @photos = photos
   end
 
   def <<(photo)
