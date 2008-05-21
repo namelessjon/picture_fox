@@ -2,7 +2,7 @@
 # picture_book.rb
 # Jonathan D. Stott <jonathan.stott@gmail.com>
 # Created: Wednesday, May 21, 2008 @ 19:25
-# Modified: Wednesday, May 21, 2008 @ 22:30
+# Modified: Wednesday, May 21, 2008 @ 23:22
 $:.unshift File.join(File.dirname(__FILE__),"app/models")
 $:.unshift File.join(File.dirname(__FILE__),"app/views")
 require 'rubygems'
@@ -27,8 +27,8 @@ class PictureBook < FXMainWindow
     # create a splitter to let us resize list and display area
     splitter = FXSplitter.new(self, :opts => SPLITTER_HORIZONTAL|LAYOUT_FILL)
 
-    @album_list_view = AlbumListView.new(splitter, 
-                            LAYOUT_FILL, @album_list)
+    @album_list_view = AlbumListView.new(splitter, @album_list, :width => 100, 
+                            :opts => LAYOUT_FILL)
     @album_view = AlbumView.new(splitter, @album)
   end
 

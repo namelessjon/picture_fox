@@ -2,14 +2,14 @@
 # album_list_view.rb
 # Jonathan D. Stott <jonathan.stott@gmail.com>
 # Created: Wednesday, May 21, 2008 @ 22:14
-# Modified: Wednesday, May 21, 2008 @ 22:28
+# Modified: Wednesday, May 21, 2008 @ 23:18
 
 class AlbumListView < FXList
 
   attr_reader :album_list
 
-  def initialize(p, opts, album_list)
-    super(p, :opts => opts)
+  def initialize(p, album_list, opts={})
+    super(p, opts)
     @album_list = album_list
     @album_list.each {|a| self << a }
   end
