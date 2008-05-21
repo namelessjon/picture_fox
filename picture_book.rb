@@ -2,7 +2,7 @@
 # picture_book.rb
 # Jonathan D. Stott <jonathan.stott@gmail.com>
 # Created: Wednesday, May 21, 2008 @ 19:25
-# Modified: Wednesday, May 21, 2008 @ 21:56
+# Modified: Wednesday, May 21, 2008 @ 22:30
 $:.unshift File.join(File.dirname(__FILE__),"app/models")
 $:.unshift File.join(File.dirname(__FILE__),"app/views")
 require 'rubygems'
@@ -12,14 +12,24 @@ include Fox
 
 require 'photo'
 require 'album'
+require 'album_list'
 require 'album_view'
+require 'album_list_view'
 
 class PictureBook < FXMainWindow
   def initialize(app)
     super(app, "Picture Book", :width => 600, :height => 400)
     add_menu_bar
     @album = Album.new("My Album")
-    @album_view = AlbumView.new(self, @album)
+    @album_list = AlbumList.new
+    @album_list << @album
+
+    # create a splitter to let us resize list and display area
+    splitter = FXSplitter.new(self, :opts => SPLITTER_HORIZONTAL|LAYOUT_FILL)
+
+    @album_list_view = AlbumListView.new(splitter, 
+                            LAYOUT_FILL, @album_list)
+    @album_view = AlbumView.new(splitter, @album)
   end
 
   def create
