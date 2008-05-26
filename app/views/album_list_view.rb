@@ -2,7 +2,7 @@
 # album_list_view.rb
 # Jonathan D. Stott <jonathan.stott@gmail.com>
 # Created: Wednesday, May 21, 2008 @ 22:14
-# Modified: Wednesday, May 21, 2008 @ 23:18
+# Modified: Monday, May 26, 2008 @ 15:01
 
 class AlbumListView < FXList
 
@@ -16,5 +16,6 @@ class AlbumListView < FXList
 
   def <<(album)
     appendItem(album.title)
+    currentItem = numItems - 1
   end
 end

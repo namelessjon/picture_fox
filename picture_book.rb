@@ -2,7 +2,7 @@
 # picture_book.rb
 # Jonathan D. Stott <jonathan.stott@gmail.com>
 # Created: Wednesday, May 21, 2008 @ 19:25
-# Modified: Wednesday, May 21, 2008 @ 23:22
+# Modified: Monday, May 26, 2008 @ 15:14
 $:.unshift File.join(File.dirname(__FILE__),"app/models")
 $:.unshift File.join(File.dirname(__FILE__),"app/views")
 require 'rubygems'
@@ -29,7 +29,17 @@ class PictureBook < FXMainWindow
 
     @album_list_view = AlbumListView.new(splitter, @album_list, :width => 100, 
                             :opts => LAYOUT_FILL)
-    @album_view = AlbumView.new(splitter, @album)
+    
+    # allow us to switch between albums!
+    @switcher = FXSwitcher.new(splitter, :opts => LAYOUT_FILL)
+    
+    @switcher.connect(SEL_UPDATE) do
+      if @album_list_view.currentItem > -1
+        @switcher.current = @album_list_view.currentItem 
+      end
+    end
+    
+    @album_view = AlbumView.new(@switcher, @album)
   end
 
   def create
@@ -61,6 +71,20 @@ class PictureBook < FXMainWindow
       end
     end
 
+    # A new album command!
+    new_album_command = FXMenuCommand.new(file_menu, "New Album ...")
+    new_album_command.connect(SEL_COMMAND) do
+      album_title = FXInputDialog.getString("My Album", self,
+                                           "New Album", "Name:")
+      if album_title
+        album = Album.new(album_title)
+        @album_list << album
+        @album_list_view << album
+        AlbumView.new(@switcher, album)
+
+      end
+    end
+
     # a seperator
     FXMenuSeparator.new(file_menu)
 
@@ -74,10 +98,20 @@ class PictureBook < FXMainWindow
   def import_photos(filenames)
     filenames.each do |fn|
       p = Photo.new(fn)
-      @album << p
-      @album_view.add_photo(p)
+      current_album << p
+      current_album_view.add_photo(p)
     end
-    @album_view.create
+    current_album_view.create
+  end
+
+  # the view of the current album we're looking at
+  def current_album_view
+    @switcher.childAtIndex(@switcher.current)
+  end
+
+  # the actual current album!
+  def current_album
+    current_album_view.album
   end
 
 
