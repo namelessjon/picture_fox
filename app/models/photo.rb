@@ -2,13 +2,12 @@
 # photo.rb
 # Jonathan D. Stott <jonathan.stott@gmail.com>
 # Created: Wednesday, May 21, 2008 @ 19:06
-# Modified: Thursday, May 29, 2008 @ 02:23
+# Modified: Thursday, May 29, 2008 @ 18:36
 require 'dm-types'
 require 'dm-validations'
 require 'dm-timestamps'
 require 'pathname'
 require 'fileutils'
-require 'ruby-debug'
 
 class Photo
   include DataMapper::Resource
@@ -91,9 +90,7 @@ class Photo
       resize_width = [Photo::ThumbSize, width].min
       resize_height = resize_width/aspect_ratio
     end
-    puts "h: #{resize_height}"
-    puts "w: #{resize_width}"
-    return [resize_width, resize_height]
+    return [resize_width.to_i, resize_height.to_i]
   end
 
   protected
@@ -134,7 +131,6 @@ class Photo
 
     # make the thumbnail
     require 'image_science'
-    debugger
     ImageScience.with_image(path) do |img|
       w, h = thumbnail_dimensions
       img.resize(w, h) do |thumb|
@@ -149,7 +145,6 @@ class Photo
 
   def set_width_and_height(context = :default)
     require 'image_science'
-    debugger
     ImageScience.with_image(path) do |img|
       self.width = img.width
       self.height = img.height
