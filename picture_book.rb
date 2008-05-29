@@ -2,19 +2,28 @@
 # picture_book.rb
 # Jonathan D. Stott <jonathan.stott@gmail.com>
 # Created: Wednesday, May 21, 2008 @ 19:25
-# Modified: Monday, May 26, 2008 @ 15:14
+# Modified: Thursday, May 29, 2008 @ 01:53
 $:.unshift File.join(File.dirname(__FILE__),"app/models")
 $:.unshift File.join(File.dirname(__FILE__),"app/views")
 require 'rubygems'
 require 'fox16'
 
+gem 'dm-core', '0.9.1'
+require 'data_mapper'
+
+DataMapper.setup(:default, 'sqlite3:///pictures.db')
+
 include Fox
+
+
 
 require 'photo'
 require 'album'
 require 'album_list'
 require 'album_view'
 require 'album_list_view'
+
+Photo.auto_migrate!
 
 class PictureBook < FXMainWindow
   def initialize(app)
@@ -65,7 +74,8 @@ class PictureBook < FXMainWindow
     import_cmd.connect(SEL_COMMAND) do
       dialog = FXFileDialog.new(self, "Import Photos")
       dialog.selectMode = SELECTFILE_MULTIPLE
-      dialog.patternList = ["JPEG Images (*.jpg, *.jpeg)"]
+      dialog.patternList = ["JPEG Images (*.jpg, *.jpeg)", 
+                            "GIF Images (*.gif)"]
       if dialog.execute != 0
         import_photos(dialog.filenames)
       end
@@ -97,9 +107,17 @@ class PictureBook < FXMainWindow
 
   def import_photos(filenames)
     filenames.each do |fn|
-      p = Photo.new(fn)
-      current_album << p
-      current_album_view.add_photo(p)
+      p = Photo.new(:path => fn)
+      if p.save
+        current_album << p
+        current_album_view.add_photo(p)
+      else
+          string = "Errors on the photo:\n"
+          p.errors.each do |e|
+            string << " - #{e}\n"
+          end
+        FXMessageBox.warning(self, MBOX_OK, "I can has problems :(", string) 
+      end
     end
     current_album_view.create
   end

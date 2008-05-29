@@ -2,8 +2,8 @@
 # album_view.rb
 # Jonathan D. Stott <jonathan.stott@gmail.com>
 # Created: Wednesday, May 21, 2008 @ 20:03
-# Modified: Monday, May 26, 2008 @ 14:07
-require 'photo_view'
+# Modified: Thursday, May 29, 2008 @ 01:51
+require 'thumbnail_view'
 
 class AlbumView < FXScrollWindow
 
@@ -24,14 +24,14 @@ class AlbumView < FXScrollWindow
     # contentWindow is the content of the FXScrollWindow
     # Thanks to the FXMatrix.new(self ...) declaration up there, it's that FXMatrix
     # See FXRuby, pg 52
-    PhotoView.new(contentWindow, photo)
+    ThumbnailView.new(contentWindow, photo)
   end
 
   # layout gets called on each resize automagically by fxruby
   def layout
     # number of columns = the most we can fit on one row, or 1 if that is 
     # too small
-    contentWindow.numColumns = [width/PhotoView::MAX_WIDTH,1].max
+    contentWindow.numColumns = [width/Photo::ThumbSize,1].max
     super
   end
 end
