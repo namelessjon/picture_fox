@@ -2,7 +2,7 @@
 # photo.rb
 # Jonathan D. Stott <jonathan.stott@gmail.com>
 # Created: Wednesday, May 21, 2008 @ 19:06
-# Modified: Thursday, May 29, 2008 @ 18:36
+# Modified: Thursday, May 29, 2008 @ 20:46
 require 'dm-types'
 require 'dm-validations'
 require 'dm-timestamps'
@@ -127,7 +127,7 @@ class Photo
   def construct_thumbnail_image
     # make a temporary path so our creation is as atomic as possible
     tmp_path = File.join(@@thumbnail_root, 
-      "#{@@thumbnail_root.hash}-#{Time.now.to_i}")
+      "#{@@thumbnail_root.hash}-#{Time.now.to_i}.png")
 
     # make the thumbnail
     require 'image_science'
