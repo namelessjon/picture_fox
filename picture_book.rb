@@ -2,7 +2,7 @@
 # picture_book.rb
 # Jonathan D. Stott <jonathan.stott@gmail.com>
 # Created: Wednesday, May 21, 2008 @ 19:25
-# Modified: Friday, May 30, 2008 @ 20:03
+# Modified: Friday, May 30, 2008 @ 23:20
 $:.unshift File.join(File.dirname(__FILE__),"app/models")
 $:.unshift File.join(File.dirname(__FILE__),"app/views")
 require 'rubygems'
@@ -23,20 +23,25 @@ require 'album_list'
 require 'album_view'
 require 'album_list_view'
 
-Photo.auto_migrate!
+#Photo.auto_migrate!
+#Album.auto_migrate!
 
 class PictureBook < FXMainWindow
   def initialize(app)
     super(app, "Picture Book", :width => 600, :height => 400)
     add_menu_bar
-    @album = Album.new("My Album")
-    @album_list = AlbumList.new
-    @album_list << @album
+
+    @albums = Album.all.entries
+    if @albums.empty?
+      @a = Album.create(:title => "My Photos")
+      puts @a.new_record?
+      @albums = Album.all.entries
+    end
 
     # create a splitter to let us resize list and display area
     splitter = FXSplitter.new(self, :opts => SPLITTER_HORIZONTAL|LAYOUT_FILL)
 
-    @album_list_view = AlbumListView.new(splitter, @album_list, :width => 100, 
+    @album_list_view = AlbumListView.new(splitter, :width => 100, 
                             :opts => LAYOUT_FILL)
     
     # allow us to switch between albums!
@@ -47,8 +52,9 @@ class PictureBook < FXMainWindow
         @switcher.current = @album_list_view.currentItem 
       end
     end
-    
-    @album_view = AlbumView.new(@switcher, @album)
+
+    @album_list_view.switcher = @switcher
+    @album_list_view.album_list = @albums
   end
 
   def create
@@ -87,11 +93,9 @@ class PictureBook < FXMainWindow
       album_title = FXInputDialog.getString("My Album", self,
                                            "New Album", "Name:")
       if album_title
-        album = Album.new(album_title)
-        @album_list << album
+        album = Album.new(:title => album_title)
+        album.save
         @album_list_view << album
-        AlbumView.new(@switcher, album)
-
       end
     end
 
@@ -109,7 +113,7 @@ class PictureBook < FXMainWindow
     filenames.each do |fn|
       p = Photo.new(:path => fn)
       if p.save
-        current_album << p
+        current_album.photos << p
         current_album_view.add_photo(p)
       else
         string = "Errors on the photo:\n"

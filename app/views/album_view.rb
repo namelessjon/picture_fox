@@ -2,7 +2,7 @@
 # album_view.rb
 # Jonathan D. Stott <jonathan.stott@gmail.com>
 # Created: Wednesday, May 21, 2008 @ 20:03
-# Modified: Thursday, May 29, 2008 @ 18:38
+# Modified: Friday, May 30, 2008 @ 23:14
 require 'thumbnail_view'
 
 class AlbumView < FXScrollWindow
@@ -14,7 +14,7 @@ class AlbumView < FXScrollWindow
     super(p, :opts => LAYOUT_FILL)
     @album = album
     FXMatrix.new(self, :opts => LAYOUT_FILL|MATRIX_BY_COLUMNS)
-    @album.each {|photo| add_photo(photo) }
+    @album.photos.each {|photo| add_photo(photo) }
   end
 
   

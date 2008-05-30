@@ -2,20 +2,29 @@
 # album_list_view.rb
 # Jonathan D. Stott <jonathan.stott@gmail.com>
 # Created: Wednesday, May 21, 2008 @ 22:14
-# Modified: Monday, May 26, 2008 @ 15:01
+# Modified: Friday, May 30, 2008 @ 23:19
 
 class AlbumListView < FXList
 
   attr_reader :album_list
+  attr_accessor :switcher
 
-  def initialize(p, album_list, opts={})
+  def initialize(p, opts={})
     super(p, opts)
-    @album_list = album_list
-    @album_list.each {|a| self << a }
   end
 
+  # adds an album to the list view, inserting an appropriate entry in the list 
+  # panel to the left and also instantiating a new view to hold all the photos
+  # in the album.
   def <<(album)
     appendItem(album.title)
-    currentItem = numItems - 1
+    AlbumView.new(switcher, album)
+    @album_list << album
+  end
+
+  # assigns an album list to the view, instantiating new views as appropriate.
+  def album_list=(albums)
+    @album_list = albums
+    @album_list.each {|a| self << a }
   end
 end

@@ -2,7 +2,7 @@
 # photo.rb
 # Jonathan D. Stott <jonathan.stott@gmail.com>
 # Created: Wednesday, May 21, 2008 @ 19:06
-# Modified: Thursday, May 29, 2008 @ 20:46
+# Modified: Friday, May 30, 2008 @ 21:15
 require 'dm-types'
 require 'dm-validations'
 require 'dm-timestamps'
@@ -31,6 +31,8 @@ class Photo
   property :updated_at, DateTime
   property :height,     Integer
   property :width,      Integer
+
+  belongs_to :album
 
   # returns the thumbnail root for the whole class
   def self.thumbnail_root

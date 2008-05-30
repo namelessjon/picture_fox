@@ -2,22 +2,18 @@
 # album.rb
 # Jonathan D. Stott <jonathan.stott@gmail.com>
 # Created: Wednesday, May 21, 2008 @ 19:07
-# Modified: Wednesday, May 21, 2008 @ 20:09
+# Modified: Friday, May 30, 2008 @ 21:31
+require 'dm-validations'
+require 'dm-timestamps'
 
 class Album
+  include DataMapper::Resource
 
-  attr_reader :title
+  property :id,     Integer,  :serial => true
+  property :title,  String,   :nullable => false, :unique => true
+  property :description, Text
+  property :created_at, DateTime
+  property :updated_at, DateTime
 
-  def initialize(title,photos=[])
-    @title = title
-    @photos = photos
-  end
-
-  def <<(photo)
-    @photos << photo
-  end
-
-  def each
-    @photos.each { |p| yield p }
-  end
+  has n, :photos
 end
