@@ -2,7 +2,7 @@
 # picture_book.rb
 # Jonathan D. Stott <jonathan.stott@gmail.com>
 # Created: Wednesday, May 21, 2008 @ 19:25
-# Modified: Thursday, May 29, 2008 @ 18:35
+# Modified: Friday, May 30, 2008 @ 20:03
 $:.unshift File.join(File.dirname(__FILE__),"app/models")
 $:.unshift File.join(File.dirname(__FILE__),"app/views")
 require 'rubygems'
@@ -109,18 +109,13 @@ class PictureBook < FXMainWindow
     filenames.each do |fn|
       p = Photo.new(:path => fn)
       if p.save
-        s = []
-        s << p.height
-        s << p.width
-        s << p.thumbnail_dimensions
-        FXMessageBox.warning(self, MBOX_OK, "Detailz!", s.join("\n"))
         current_album << p
         current_album_view.add_photo(p)
       else
-          string = "Errors on the photo:\n"
-          p.errors.each do |e|
-            string << " - #{e}\n"
-          end
+        string = "Errors on the photo:\n"
+        p.errors.each do |e|
+          string << " - #{e}\n"
+        end
         FXMessageBox.warning(self, MBOX_OK, "I can has problems :(", string) 
       end
     end
