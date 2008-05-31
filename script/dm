@@ -1,0 +1,7 @@
+#!/usr/bin/ruby
+
+MODEL_DIR = "app/models"
+ADAPTER = "sqlite3"
+DBFILE = "pictures.db"
+
+system "dm -m #{MODEL_DIR} -a #{ADAPTER} -d #{DBFILE}"
