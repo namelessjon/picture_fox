@@ -2,7 +2,7 @@
 # picture_book.rb
 # Jonathan D. Stott <jonathan.stott@gmail.com>
 # Created: Wednesday, May 21, 2008 @ 19:25
-# Modified: Saturday, May 31, 2008 @ 01:19
+# Modified: Saturday, May 31, 2008 @ 01:25
 $:.unshift File.join(File.dirname(__FILE__),"app/models")
 $:.unshift File.join(File.dirname(__FILE__),"app/views")
 require 'rubygems'
@@ -19,6 +19,8 @@ require 'album'
 require 'album_list'
 require 'album_view'
 require 'album_list_view'
+
+DataMapper.repository(:default).auto_upgrade!
 
 class PictureBook < FXMainWindow
   def initialize(app)
