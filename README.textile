@@ -1,0 +1,27 @@
+h1. Picture Fox
+
+h2. Introduction
+
+Picture Fox is a picture viewing application based on FXRuby[1], which uses 
+DataMapper[2] to store its metadata.  
+
+It's (increasingly loosely) based on the PictureBook application from 
+_FXRuby: Creating Lean and Mean GUIs with Ruby_, by Lyle Johnson[3], and is principly a project for me to learn FXRuby/GUI programming and also to experiment with the new DataMapper gem.
+
+h2. Usage
+
+Install the nessary gems:
+
+<pre>
+<code>
+  gem install fxruby image_science
+</code>
+</pre>
+
+And follow the "instructions":http://www.datamapper.org/getting_started.html on the DataMapper site to get the latest DM.
+
+Then just run @ruby picture_fox.rb@
+
+fn1. "FXRuby":http://www.fxruby.org
+fn2. "DataMapper":http://www.datamapper.org
+fn3. "FXRuby Book":http://pragprog.com/titles/fxruby/fxruby
