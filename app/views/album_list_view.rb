@@ -2,7 +2,7 @@
 # album_list_view.rb
 # Jonathan D. Stott <jonathan.stott@gmail.com>
 # Created: Wednesday, May 21, 2008 @ 22:14
-# Modified: Friday, May 30, 2008 @ 23:19
+# Modified: Saturday, May 31, 2008 @ 01:07
 
 class AlbumListView < FXList
 
@@ -19,7 +19,6 @@ class AlbumListView < FXList
   def <<(album)
     appendItem(album.title)
     AlbumView.new(switcher, album)
-    @album_list << album
   end
 
   # assigns an album list to the view, instantiating new views as appropriate.
