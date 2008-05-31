@@ -35,6 +35,8 @@ class PictureFox < FXMainWindow
 
     @album_list_view = AlbumListView.new(splitter, :width => 100, 
                             :opts => LAYOUT_FILL)
+
+    add_album_list_context_menu
     
     # allow us to switch between albums!
     @switcher = FXSwitcher.new(splitter, :opts => LAYOUT_FILL)
@@ -144,6 +146,59 @@ class PictureFox < FXMainWindow
     end
   end
 
+  # adds our context menu to the album list
+  def add_album_list_context_menu
+    @album_list_view.connect(SEL_RIGHTBUTTONRELEASE) do |sender, sel, event|
+      # if we moved, we probably didn't want a menu!
+      unless event.moved?
+        index = sender.getItemAt(event.win_x, event.win_y)
+        unless index.nil?
+          album = Album.first(:title => sender.getItemText(index))
+          FXMenuPane.new(self) do |m|
+            rename = FXMenuCommand.new(m, "Rename Album")
+            rename.connect(SEL_COMMAND) do
+              name = rename_album(album)
+              @album_list_view.setItemText(index, name) unless name.nil?
+            end
+            m.create
+            m.popup(nil, event.root_x, event.root_y)
+            app.runModalWhileShown(m)
+          end
+        end
+      end
+    end
+  end
+
+  # defines the rename menu command option
+  def rename_album(album)
+    album_title = FXInputDialog.getString(album.title, self,
+                                           "Rename Album", "Name:")
+    if album_title
+      while true
+        album.attribute_set(:title, album_title)
+        if album.save
+          return album_title
+        else
+          s=[]
+          s << "There were problems with that title."
+          album.errors.each do |e|
+            s << " - #{e}"
+          end
+          album_title = FXInputDialog.getString(album.title, self,
+                                        "Oops! ", s.join("\n"))
+          return nil if album_title.nil?
+        end
+      end
+    end
+  end
+
+  # finds an album from the given event
+  def get_album_from_event(sender, event)
+    #index = sender.getItemAt(event.win_x, event.win_y)
+    #return nil if index.nil?
+    entry = sender.getItem(event)
+    album = Album.first(:title => entry.text)
+  end
 
 end
 
