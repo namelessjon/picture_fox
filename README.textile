@@ -23,5 +23,7 @@ And follow the "instructions":http://www.datamapper.org/getting_started.html on 
 Then just run @ruby picture_fox.rb@
 
 fn1. "FXRuby":http://www.fxruby.org
+
 fn2. "DataMapper":http://www.datamapper.org
+
 fn3. "FXRuby Book":http://pragprog.com/titles/fxruby/fxruby
