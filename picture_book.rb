@@ -2,7 +2,7 @@
 # picture_book.rb
 # Jonathan D. Stott <jonathan.stott@gmail.com>
 # Created: Wednesday, May 21, 2008 @ 19:25
-# Modified: Saturday, May 31, 2008 @ 13:51
+# Modified: Saturday, May 31, 2008 @ 13:56
 $:.unshift File.join(File.dirname(__FILE__),"app/models")
 $:.unshift File.join(File.dirname(__FILE__),"app/views")
 require 'rubygems'
@@ -84,28 +84,7 @@ class PictureBook < FXMainWindow
 
     # A new album command!
     new_album_command = FXMenuCommand.new(file_menu, "New Album ...")
-    new_album_command.connect(SEL_COMMAND) do
-      album_title = FXInputDialog.getString("My Album", self,
-                                           "New Album", "Name:")
-      if album_title
-        while true
-          album = Album.new(:title => album_title)
-          if album.save
-            @album_list_view << album
-            break
-          else
-            s=[]
-            s << "There were problems with that album."
-            album.errors.each do |e|
-              s << " - #{e}"
-            end
-            album_title = FXInputDialog.getString(album.title, self,
-                                        "Oops! ", s.join("\n"))
-            break if album_title.nil?
-          end
-        end
-      end
-    end
+    new_album_command.connect(SEL_COMMAND, method(:new_album_menu_item))
 
     # a seperator
     FXMenuSeparator.new(file_menu)
@@ -142,6 +121,30 @@ class PictureBook < FXMainWindow
   # the actual current album!
   def current_album
     current_album_view.album
+  end
+
+  # provides the functionality behind the 'New Album' menu entry
+  def new_album_menu_item(sender, selector, data)
+    album_title = FXInputDialog.getString("My Album", self,
+                                           "New Album", "Name:")
+    if album_title
+      while true
+        album = Album.new(:title => album_title)
+        if album.save
+          @album_list_view << album
+          break
+        else
+          s=[]
+          s << "There were problems with that album."
+          album.errors.each do |e|
+            s << " - #{e}"
+          end
+          album_title = FXInputDialog.getString(album.title, self,
+                                        "Oops! ", s.join("\n"))
+          break if album_title.nil?
+        end
+      end
+    end
   end
 
 
