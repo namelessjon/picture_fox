@@ -8,7 +8,8 @@ class AlbumView < FXScrollWindow
     # LAYOUT_FILL is fairly ronseal!
     super(p, :opts => LAYOUT_FILL)
     @album = album
-    FXMatrix.new(self, :opts => LAYOUT_FILL|MATRIX_BY_COLUMNS)
+    FXMatrix.new(self, :opts => LAYOUT_FILL|MATRIX_BY_COLUMNS,
+                :hSpacing => 5, :vSpacing => 5)
     @album.photos.each {|photo| add_photo(photo) }
   end
 
