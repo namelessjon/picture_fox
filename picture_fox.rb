@@ -74,7 +74,8 @@ class PictureFox < FXMainWindow
     import_cmd.connect(SEL_COMMAND) do
       dialog = FXFileDialog.new(self, "Import Photos")
       dialog.selectMode = SELECTFILE_MULTIPLE
-      dialog.patternList = ["JPEG Images (*.jpg, *.jpeg)", 
+      dialog.patternList = ["JPEG Images (*.jpg, *.jpeg)",
+                            "PNG Images (*.png)",
                             "GIF Images (*.gif)"]
       if dialog.execute != 0
         import_photos(dialog.filenames)
