@@ -7,15 +7,12 @@ $:.unshift File.join(File.dirname(__FILE__),"app/models")
 $:.unshift File.join(File.dirname(__FILE__),"app/views")
 require 'rubygems'
 require 'fox16'
+include Fox
 
 gem 'dm-core', '0.9.1'
 require 'data_mapper'
 
 DataMapper.setup(:default, 'sqlite3:///pictures.db')
-
-include Fox
-
-
 
 require 'photo'
 require 'album'
