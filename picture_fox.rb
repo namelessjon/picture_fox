@@ -1,8 +1,6 @@
 #!/usr/bin/ruby
-# picture_book.rb
+# picture_fox.rb
 # Jonathan D. Stott <jonathan.stott@gmail.com>
-# Created: Wednesday, May 21, 2008 @ 19:25
-# Modified: Saturday, May 31, 2008 @ 13:56
 $:.unshift File.join(File.dirname(__FILE__),"app/models")
 $:.unshift File.join(File.dirname(__FILE__),"app/views")
 require 'rubygems'
@@ -16,13 +14,12 @@ DataMapper.setup(:default, 'sqlite3:///pictures.db')
 
 require 'photo'
 require 'album'
-require 'album_list'
 require 'album_view'
 require 'album_list_view'
 
 DataMapper.repository(:default).auto_upgrade!
 
-class PictureBook < FXMainWindow
+class PictureFox < FXMainWindow
   def initialize(app)
     super(app, "Picture Book", :width => 600, :height => 400)
     add_menu_bar
@@ -152,7 +149,7 @@ end
 
 if __FILE__ == $0
   FXApp.new do |app|
-    PictureBook.new(app)
+    PictureFox.new(app)
     app.create
     app.run
   end

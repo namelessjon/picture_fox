@@ -1,8 +1,3 @@
-#!/usr/bin/ruby
-# photo.rb
-# Jonathan D. Stott <jonathan.stott@gmail.com>
-# Created: Wednesday, May 21, 2008 @ 19:06
-# Modified: Friday, May 30, 2008 @ 21:15
 require 'dm-types'
 require 'dm-validations'
 require 'dm-timestamps'

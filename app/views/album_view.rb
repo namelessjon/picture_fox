@@ -1,8 +1,3 @@
-#!/usr/bin/ruby
-# album_view.rb
-# Jonathan D. Stott <jonathan.stott@gmail.com>
-# Created: Wednesday, May 21, 2008 @ 20:03
-# Modified: Friday, May 30, 2008 @ 23:14
 require 'thumbnail_view'
 
 class AlbumView < FXScrollWindow

@@ -1,9 +1,3 @@
-#!/usr/bin/ruby
-# album_list_view.rb
-# Jonathan D. Stott <jonathan.stott@gmail.com>
-# Created: Wednesday, May 21, 2008 @ 22:14
-# Modified: Saturday, May 31, 2008 @ 01:07
-
 class AlbumListView < FXList
 
   attr_reader :album_list

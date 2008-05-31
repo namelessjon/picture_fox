@@ -1,8 +1,3 @@
-#!/usr/bin/ruby
-# album.rb
-# Jonathan D. Stott <jonathan.stott@gmail.com>
-# Created: Wednesday, May 21, 2008 @ 19:07
-# Modified: Friday, May 30, 2008 @ 21:31
 require 'dm-validations'
 require 'dm-timestamps'
 
