@@ -2,7 +2,7 @@
 # picture_book.rb
 # Jonathan D. Stott <jonathan.stott@gmail.com>
 # Created: Wednesday, May 21, 2008 @ 19:25
-# Modified: Saturday, May 31, 2008 @ 01:25
+# Modified: Saturday, May 31, 2008 @ 13:51
 $:.unshift File.join(File.dirname(__FILE__),"app/models")
 $:.unshift File.join(File.dirname(__FILE__),"app/views")
 require 'rubygems'
@@ -88,9 +88,22 @@ class PictureBook < FXMainWindow
       album_title = FXInputDialog.getString("My Album", self,
                                            "New Album", "Name:")
       if album_title
-        album = Album.new(:title => album_title)
-        album.save
-        @album_list_view << album
+        while true
+          album = Album.new(:title => album_title)
+          if album.save
+            @album_list_view << album
+            break
+          else
+            s=[]
+            s << "There were problems with that album."
+            album.errors.each do |e|
+              s << " - #{e}"
+            end
+            album_title = FXInputDialog.getString(album.title, self,
+                                        "Oops! ", s.join("\n"))
+            break if album_title.nil?
+          end
+        end
       end
     end
 
