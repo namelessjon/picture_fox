@@ -21,7 +21,7 @@ DataMapper.repository(:default).auto_upgrade!
 
 class PictureFox < FXMainWindow
   def initialize(app)
-    super(app, "Picture Book", :width => 600, :height => 400)
+    super(app, "Picture Fox", :width => 600, :height => 400)
     add_menu_bar
 
     @albums = Album.all.entries
