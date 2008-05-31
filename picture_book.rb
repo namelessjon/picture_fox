@@ -2,7 +2,7 @@
 # picture_book.rb
 # Jonathan D. Stott <jonathan.stott@gmail.com>
 # Created: Wednesday, May 21, 2008 @ 19:25
-# Modified: Friday, May 30, 2008 @ 23:20
+# Modified: Saturday, May 31, 2008 @ 01:19
 $:.unshift File.join(File.dirname(__FILE__),"app/models")
 $:.unshift File.join(File.dirname(__FILE__),"app/views")
 require 'rubygems'
@@ -20,9 +20,6 @@ require 'album_list'
 require 'album_view'
 require 'album_list_view'
 
-#Photo.auto_migrate!
-#Album.auto_migrate!
-
 class PictureBook < FXMainWindow
   def initialize(app)
     super(app, "Picture Book", :width => 600, :height => 400)
@@ -30,8 +27,7 @@ class PictureBook < FXMainWindow
 
     @albums = Album.all.entries
     if @albums.empty?
-      @a = Album.create(:title => "My Photos")
-      puts @a.new_record?
+      Album.create(:title => "My Photos")
       @albums = Album.all.entries
     end
 
