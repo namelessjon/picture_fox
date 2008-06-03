@@ -25,7 +25,7 @@ class AlbumView < FXScrollWindow
   def layout
     # number of columns = the most we can fit on one row, or 1 if that is 
     # too small
-    contentWindow.numColumns = [width/Photo::ThumbSize,1].max
+    contentWindow.numColumns = [width/Photo::THUMB_SIZE,1].max
     super
   end
 end

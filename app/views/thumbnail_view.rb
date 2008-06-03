@@ -4,7 +4,7 @@ class ThumbnailView < FXImageFrame
 
   def initialize(p, photo)
     super(p, nil, :opts => FRAME_RAISED|LAYOUT_CENTER_X|LAYOUT_CENTER_Y|LAYOUT_FILL_ROW|LAYOUT_FILL_COLUMN, 
-         :width => 128, :height => 128)
+         :width => Photo::THUMB_SIZE, :height => Photo::THUMB_SIZE)
     self.photo = photo
     load_image
   end

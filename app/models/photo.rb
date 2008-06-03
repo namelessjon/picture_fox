@@ -7,7 +7,7 @@ require 'fileutils'
 class Photo
   include DataMapper::Resource
 
-  ThumbSize = 128
+  THUMB_SIZE = 128
 
   before :valid?, :expand_path
   before :valid?, :calculate_crypt_sums
@@ -81,10 +81,10 @@ class Photo
   # returns an array of thumbnail dimensions
   def thumbnail_dimensions
     if height > width
-      resize_height = [Photo::ThumbSize, height].min
+      resize_height = [Photo::THUMB_SIZE, height].min
       resize_width = resize_height*aspect_ratio
     else
-      resize_width = [Photo::ThumbSize, width].min
+      resize_width = [Photo::THUMB_SIZE, width].min
       resize_height = resize_width/aspect_ratio
     end
     return [resize_width.to_i, resize_height.to_i]
